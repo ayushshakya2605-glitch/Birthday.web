@@ -15,14 +15,55 @@
       background-color: #0b0710;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
       overflow: hidden;
       color: white;
+      position: relative;
     }
 
+    /* Floating Bubbles / Glowing Orbs in Background */
+    .bubbles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -50px;
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.8) 0%, rgba(168, 85, 247, 0.2) 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(192, 132, 252, 0.6);
+      animation: floatUp 8s infinite linear;
+    }
+
+    .b1 { width: 25px; height: 25px; left: 15%; animation-duration: 7s; animation-delay: 0s; }
+    .b2 { width: 15px; height: 15px; left: 35%; animation-duration: 9s; animation-delay: 2s; }
+    .b3 { width: 30px; height: 30px; left: 55%; animation-duration: 6s; animation-delay: 1s; }
+    .b4 { width: 20px; height: 20px; left: 75%; animation-duration: 10s; animation-delay: 3s; }
+    .b5 { width: 12px; height: 12px; left: 85%; animation-duration: 8s; animation-delay: 4s; }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+      }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% {
+        transform: translateY(-105vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Main Container */
     .container {
       position: relative;
       width: 100%;
@@ -31,14 +72,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      z-index: 2;
     }
 
-    /* Tap to Open Section */
+    /* Step 1: Tap to Open */
     .tap-btn {
       cursor: pointer;
       text-align: center;
       z-index: 10;
-      transition: opacity 0.5s, transform 0.5s;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .tap-btn.hidden {
@@ -51,47 +94,42 @@
       font-size: 22px;
       letter-spacing: 2px;
       font-weight: bold;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
       text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
 
     .heart-icon {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background-color: #a855f7;
       display: inline-block;
       transform: rotate(-45deg);
       position: relative;
       animation: pulse 1.2s infinite ease-in-out;
       box-shadow: 0 0 25px #a855f7;
+      margin-top: 10px;
     }
 
     .heart-icon::before,
     .heart-icon::after {
       content: "";
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background-color: #a855f7;
       border-radius: 50%;
       position: absolute;
     }
 
-    .heart-icon::before {
-      top: -30px;
-      left: 0;
-    }
-
-    .heart-icon::after {
-      left: 30px;
-      top: 0;
-    }
+    .heart-icon::before { top: -25px; left: 0; }
+    .heart-icon::after { left: 25px; top: 0; }
 
     @keyframes pulse {
       0%, 100% { transform: rotate(-45deg) scale(1); }
-      50% { transform: rotate(-45deg) scale(1.15); }
+      50% { transform: rotate(-45deg) scale(1.2); }
     }
 
-    /* Flowers & Card Content */
+    /* Step 2 & 3: Content Reveal */
     .content {
       position: absolute;
       top: 0;
@@ -111,71 +149,80 @@
     }
 
     .title {
-      font-size: 28px;
+      font-size: 30px;
       color: #e9d5ff;
-      margin-top: 20px;
+      margin-top: 30px;
       font-family: 'Georgia', serif;
-      text-shadow: 0 0 10px rgba(233, 213, 255, 0.5);
+      text-shadow: 0 0 12px rgba(233, 213, 255, 0.7);
     }
 
-    /* Flowers Bouquet Styles */
+    /* Flowers Bouquet Animation */
     .flowers-container {
       position: relative;
       width: 220px;
       height: 220px;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     .flower {
       position: absolute;
-      bottom: 0;
+      bottom: 10px;
       left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 120px;
+      width: 16px;
+      height: 130px;
       background-image: linear-gradient(to bottom, #38f2ff, #16a1f8, #1a2a3a 99%);
       clip-path: ellipse(50% 50% at 50% 50%);
       transform-origin: center bottom;
-      animation: open-flower 2s 1s backwards;
+      opacity: 0;
     }
 
-    .f1 { transform: translateX(-50%) rotate(-30deg); }
-    .f2 { transform: translateX(-50%) rotate(-15deg); }
+    .content.visible .flower {
+      animation: open-flower 2s 0.5s forwards ease-out;
+    }
+
+    .f1 { transform: translateX(-50%) rotate(-32deg); }
+    .f2 { transform: translateX(-50%) rotate(-16deg); }
     .f3 { transform: translateX(-50%) rotate(0deg); }
-    .f4 { transform: translateX(-50%) rotate(15deg); }
-    .f5 { transform: translateX(-50%) rotate(30deg); }
+    .f4 { transform: translateX(-50%) rotate(16deg); }
+    .f5 { transform: translateX(-50%) rotate(32deg); }
 
     .flower-top {
       position: absolute;
-      top: -15px;
+      top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      width: 30px;
-      height: 30px;
+      width: 26px;
+      height: 26px;
       background: #c084fc;
       border-radius: 50%;
-      box-shadow: 0 0 15px #e9d5ff;
+      box-shadow: 0 0 12px #e9d5ff;
     }
 
     @keyframes open-flower {
-      0% { height: 0; opacity: 0; }
-      100% { height: 120px; opacity: 1; }
+      0% {
+        height: 0;
+        opacity: 0;
+      }
+      100% {
+        height: 130px;
+        opacity: 1;
+      }
     }
 
-    /* Envelope & Card Styles */
+    /* Envelope & Card Reveal */
     .envelope-wrapper {
       position: relative;
-      margin-top: 40px;
+      margin-top: 30px;
       cursor: pointer;
     }
 
     .envelope {
-      width: 240px;
-      height: 150px;
+      width: 220px;
+      height: 140px;
       background: #f472b6;
-      border-radius: 0 0 10px 10px;
+      border-radius: 0 0 8px 8px;
       position: relative;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     }
 
     .envelope::before {
@@ -183,11 +230,11 @@
       position: absolute;
       top: 0;
       left: 0;
-      border-left: 120px solid #ec4899;
-      border-right: 120px solid #ec4899;
-      border-top: 80px solid transparent;
+      border-left: 110px solid #ec4899;
+      border-right: 110px solid #ec4899;
+      border-top: 70px solid transparent;
       border-bottom: 70px solid #db2777;
-      border-radius: 0 0 10px 10px;
+      border-radius: 0 0 8px 8px;
       z-index: 2;
     }
 
@@ -196,12 +243,12 @@
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 210px;
-      background: white;
+      width: 190px;
+      background: #ffffff;
       color: #333;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 12px;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.8s ease-in-out;
       z-index: 1;
       text-align: center;
@@ -210,36 +257,40 @@
     }
 
     .envelope-wrapper.open .card {
-      transform: translateX(-50%) translateY(-100px);
+      transform: translateX(-50%) translateY(-90px);
       z-index: 3;
     }
 
     .card-title {
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       color: #111;
-    }
-
-    .card-img {
-      width: 80px;
-      margin-top: 8px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Floating Background Orbs / Bubbles -->
+  <div class="bubbles">
+    <div class="bubble b1"></div>
+    <div class="bubble b2"></div>
+    <div class="bubble b3"></div>
+    <div class="bubble b4"></div>
+    <div class="bubble b5"></div>
+  </div>
+
   <div class="container">
-    <!-- Tap to Open Button -->
+    <!-- Step 1: Tap To Open -->
     <div class="tap-btn" id="tapBtn">
       <div class="tap-text">TAP TO OPEN</div>
       <div class="heart-icon"></div>
     </div>
 
-    <!-- Hidden Content Revealed on Tap -->
+    <!-- Step 2 & 3: Revealed Flowers and Envelope -->
     <div class="content" id="mainContent">
       <h2 class="title">Flowers For You</h2>
 
-      <!-- Flowers -->
+      <!-- Flowers Bouquet -->
       <div class="flowers-container">
         <div class="flower f1"><div class="flower-top"></div></div>
         <div class="flower f2"><div class="flower-top"></div></div>
@@ -248,13 +299,12 @@
         <div class="flower f5"><div class="flower-top"></div></div>
       </div>
 
-      <!-- Card Envelope -->
+      <!-- Letter / Card Envelope -->
       <div class="envelope-wrapper" id="envelope">
         <div class="envelope"></div>
         <div class="card">
           <div class="card-title">Dear Love,</div>
-          <p>Wishing you a day filled with happiness and love. You are very special!</p>
-          <img class="card-img" src="https://via.placeholder.com/80x60?text=Bears" alt="Cute Bears">
+          <p>Wishing you a wonderful day filled with joy and happiness!</p>
         </div>
       </div>
     </div>
@@ -265,11 +315,13 @@
     const mainContent = document.getElementById('mainContent');
     const envelope = document.getElementById('envelope');
 
+    // Click to Open Action
     tapBtn.addEventListener('click', () => {
       tapBtn.classList.add('hidden');
       mainContent.classList.add('visible');
     });
 
+    // Click Envelope to Open Letter Card
     envelope.addEventListener('click', () => {
       envelope.classList.toggle('open');
     });
