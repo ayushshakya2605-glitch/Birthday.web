@@ -1,331 +1,524 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gift For Her</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+}
+
+/* BACKGROUND */
+.scene{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+
+    background:
+    radial-gradient(
+        circle at 60% 38%,
+        #fffaf3 0%,
+        #ffe9dc 30%,
+        #ffd0c2 65%,
+        #ffb5aa 100%
+    );
+}
+
+/* SOFT GLOW */
+.scene::after{
+    content:"";
+    position:absolute;
+    width:650px;
+    height:650px;
+    left:55%;
+    top:8%;
+    transform:translateX(-50%);
+
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.85),
+        rgba(255,255,255,0) 70%
+    );
+
+    pointer-events:none;
+}
+
+/* TREE TRUNK */
+.trunk{
+    position:absolute;
+    z-index:3;
+
+    left:66%;
+    bottom:-5px;
+
+    width:18px;
+    height:44vh;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        90deg,
+        #35130f,
+        #6a2a20,
+        #3a1511
+    );
+}
+
+/* BRANCHES */
+.branch{
+    position:absolute;
+    z-index:2;
+
+    height:8px;
+    border-radius:20px;
+
+    background:#4a1b15;
+
+    transform-origin:left center;
+}
+
+.branch1{
+    left:66%;
+    top:48%;
+    width:190px;
+    transform:rotate(-62deg);
+}
+
+.branch2{
+    left:66%;
+    top:43%;
+    width:145px;
+    transform:rotate(-105deg);
+}
+
+.branch3{
+    left:66%;
+    top:45%;
+    width:150px;
+    transform:rotate(-25deg);
+}
+
+/* HEART TREE */
+.heart{
+    position:absolute;
+    z-index:4;
+
+    left:66%;
+    top:6%;
+
+    width:390px;
+    height:390px;
+
+    transform:translateX(-50%);
+
+    animation:pulse 3s ease-in-out infinite;
+}
+
+/* FLOWER */
+.flower{
+    position:absolute;
+
+    width:27px;
+    height:27px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle at center,
+        #ffd84d 0 13%,
+        transparent 14%
+    ),
+    radial-gradient(
+        circle at 50% 12%,
+        #ff4c91 0 35%,
+        transparent 36%
+    ),
+    radial-gradient(
+        circle at 88% 50%,
+        #ff5d99 0 35%,
+        transparent 36%
+    ),
+    radial-gradient(
+        circle at 50% 88%,
+        #ff4b8c 0 35%,
+        transparent 36%
+    ),
+    radial-gradient(
+        circle at 12% 50%,
+        #ff6da0 0 35%,
+        transparent 36%
+    );
+
+    filter:drop-shadow(
+        0 2px 3px rgba(180,40,80,.18)
+    );
+
+    animation:flowerFloat 2.5s ease-in-out infinite;
+}
+
+/* ORANGE FLOWERS */
+.flower.orange{
+    background:
+    radial-gradient(
+        circle at center,
+        #ffd85b 0 13%,
+        transparent 14%
+    ),
+    radial-gradient(
+        circle at 50% 12%,
+        #ff7839 0 35%,
+        transparent 36%
+    ),
+    radial-gradient(
+        circle at 88% 50%,
+        #ff9843 0 35%,
+        transparent 36%
+    ),
+    radial-gradient(
+        circle at 50% 88%,
+        #ff713c 0 35%,
+        transparent 36%
+    ),
+    radial-gradient(
+        circle at 12% 50%,
+        #ff8b3d 0 35%,
+        transparent 36%
+    );
+}
+
+/* HEART-SHAPED FLOWER POSITIONS */
+
+.flower:nth-child(1){left:45%;top:2%}
+.flower:nth-child(2){left:55%;top:2%}
+.flower:nth-child(3){left:65%;top:5%}
+.flower:nth-child(4){left:35%;top:8%}
+.flower:nth-child(5){left:48%;top:10%}
+.flower:nth-child(6){left:60%;top:10%}
+.flower:nth-child(7){left:72%;top:12%}
+
+.flower:nth-child(8){left:27%;top:17%}
+.flower:nth-child(9){left:39%;top:18%}
+.flower:nth-child(10){left:51%;top:18%}
+.flower:nth-child(11){left:63%;top:19%}
+.flower:nth-child(12){left:76%;top:21%}
+
+.flower:nth-child(13){left:21%;top:27%}
+.flower:nth-child(14){left:33%;top:27%}
+.flower:nth-child(15){left:45%;top:28%}
+.flower:nth-child(16){left:57%;top:28%}
+.flower:nth-child(17){left:69%;top:29%}
+.flower:nth-child(18){left:82%;top:31%}
+
+.flower:nth-child(19){left:18%;top:37%}
+.flower:nth-child(20){left:30%;top:38%}
+.flower:nth-child(21){left:42%;top:38%}
+.flower:nth-child(22){left:54%;top:39%}
+.flower:nth-child(23){left:66%;top:40%}
+.flower:nth-child(24){left:78%;top:41%}
+.flower:nth-child(25){left:87%;top:43%}
+
+.flower:nth-child(26){left:25%;top:47%}
+.flower:nth-child(27){left:37%;top:48%}
+.flower:nth-child(28){left:49%;top:49%}
+.flower:nth-child(29){left:61%;top:49%}
+.flower:nth-child(30){left:73%;top:51%}
+
+.flower:nth-child(31){left:33%;top:57%}
+.flower:nth-child(32){left:45%;top:58%}
+.flower:nth-child(33){left:57%;top:58%}
+.flower:nth-child(34){left:68%;top:60%}
+
+.flower:nth-child(35){left:43%;top:67%}
+.flower:nth-child(36){left:55%;top:67%}
+
+/* BIRTHDAY TEXT */
+.message{
+    position:absolute;
+    z-index:10;
+
+    left:5%;
+    bottom:10%;
+}
+
+.small{
+    margin-left:5px;
+    margin-bottom:4px;
+
+    font-family:Georgia,serif;
+
+    font-size:14px;
+
+    color:#754848;
+}
+
+h1{
+    font-family:
+        "Brush Script MT",
+        "Segoe Script",
+        cursive;
+
+    font-size:clamp(48px,9vw,85px);
+
+    font-weight:400;
+
+    line-height:.9;
+
+    color:#bd3168;
+
+    text-shadow:
+    0 2px 4px rgba(120,30,60,.15);
+}
+
+.sub{
+    margin-top:10px;
+
+    font-family:Georgia,serif;
+
+    font-size:12px;
+
+    color:#754848;
+}
+
+/* FLOATING PETALS */
+.petal{
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#ff6695;
+
+    opacity:.35;
+
+    animation:fall linear infinite;
+}
+
+/* ANIMATIONS */
+
+@keyframes pulse{
+
+    0%,100%{
+        transform:translateX(-50%) scale(1);
     }
 
-    body {
-      background-color: #0b0710;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      color: white;
-      position: relative;
+    20%{
+        transform:translateX(-50%) scale(1.035);
     }
 
-    /* Floating Bubbles / Glowing Orbs in Background */
-    .bubbles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      z-index: 1;
-      pointer-events: none;
+    40%{
+        transform:translateX(-50%) scale(1);
     }
 
-    .bubble {
-      position: absolute;
-      bottom: -50px;
-      background: radial-gradient(circle, rgba(192, 132, 252, 0.8) 0%, rgba(168, 85, 247, 0.2) 70%);
-      border-radius: 50%;
-      box-shadow: 0 0 15px rgba(192, 132, 252, 0.6);
-      animation: floatUp 8s infinite linear;
+    60%{
+        transform:translateX(-50%) scale(1.035);
     }
 
-    .b1 { width: 25px; height: 25px; left: 15%; animation-duration: 7s; animation-delay: 0s; }
-    .b2 { width: 15px; height: 15px; left: 35%; animation-duration: 9s; animation-delay: 2s; }
-    .b3 { width: 30px; height: 30px; left: 55%; animation-duration: 6s; animation-delay: 1s; }
-    .b4 { width: 20px; height: 20px; left: 75%; animation-duration: 10s; animation-delay: 3s; }
-    .b5 { width: 12px; height: 12px; left: 85%; animation-duration: 8s; animation-delay: 4s; }
+    80%{
+        transform:translateX(-50%) scale(1);
+    }
+}
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(0.8);
-        opacity: 0;
-      }
-      20% { opacity: 0.8; }
-      80% { opacity: 0.8; }
-      100% {
-        transform: translateY(-105vh) scale(1.2);
-        opacity: 0;
-      }
+@keyframes flowerFloat{
+
+    0%,100%{
+        transform:translateY(0);
     }
 
-    /* Main Container */
-    .container {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      height: 600px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
+    50%{
+        transform:translateY(-3px);
+    }
+}
+
+@keyframes fall{
+
+    from{
+        transform:translateY(-20px);
+        opacity:0;
     }
 
-    /* Step 1: Tap to Open */
-    .tap-btn {
-      cursor: pointer;
-      text-align: center;
-      z-index: 10;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+    20%{
+        opacity:.35;
     }
 
-    .tap-btn.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.8);
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    .heart{
+        left:66%;
+        top:9%;
+
+        width:300px;
+        height:300px;
     }
 
-    .tap-text {
-      font-size: 22px;
-      letter-spacing: 2px;
-      font-weight: bold;
-      margin-bottom: 25px;
-      text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    .flower{
+        width:20px;
+        height:20px;
     }
 
-    .heart-icon {
-      width: 50px;
-      height: 50px;
-      background-color: #a855f7;
-      display: inline-block;
-      transform: rotate(-45deg);
-      position: relative;
-      animation: pulse 1.2s infinite ease-in-out;
-      box-shadow: 0 0 25px #a855f7;
-      margin-top: 10px;
+    .trunk{
+        left:66%;
+        width:14px;
+        height:40vh;
     }
 
-    .heart-icon::before,
-    .heart-icon::after {
-      content: "";
-      width: 50px;
-      height: 50px;
-      background-color: #a855f7;
-      border-radius: 50%;
-      position: absolute;
+    .branch1{
+        left:66%;
+        width:135px;
     }
 
-    .heart-icon::before { top: -25px; left: 0; }
-    .heart-icon::after { left: 25px; top: 0; }
-
-    @keyframes pulse {
-      0%, 100% { transform: rotate(-45deg) scale(1); }
-      50% { transform: rotate(-45deg) scale(1.2); }
+    .branch2{
+        left:66%;
+        width:110px;
     }
 
-    /* Step 2 & 3: Content Reveal */
-    .content {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1s ease-in-out, visibility 1s;
+    .branch3{
+        left:66%;
+        width:105px;
     }
 
-    .content.visible {
-      opacity: 1;
-      visibility: visible;
+    .message{
+        left:5%;
+        bottom:12%;
     }
 
-    .title {
-      font-size: 30px;
-      color: #e9d5ff;
-      margin-top: 30px;
-      font-family: 'Georgia', serif;
-      text-shadow: 0 0 12px rgba(233, 213, 255, 0.7);
+    h1{
+        font-size:52px;
     }
 
-    /* Flowers Bouquet Animation */
-    .flowers-container {
-      position: relative;
-      width: 220px;
-      height: 220px;
-      margin-top: 20px;
+    .small{
+        font-size:11px;
     }
 
-    .flower {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      width: 16px;
-      height: 130px;
-      background-image: linear-gradient(to bottom, #38f2ff, #16a1f8, #1a2a3a 99%);
-      clip-path: ellipse(50% 50% at 50% 50%);
-      transform-origin: center bottom;
-      opacity: 0;
+    .sub{
+        font-size:9px;
     }
-
-    .content.visible .flower {
-      animation: open-flower 2s 0.5s forwards ease-out;
-    }
-
-    .f1 { transform: translateX(-50%) rotate(-32deg); }
-    .f2 { transform: translateX(-50%) rotate(-16deg); }
-    .f3 { transform: translateX(-50%) rotate(0deg); }
-    .f4 { transform: translateX(-50%) rotate(16deg); }
-    .f5 { transform: translateX(-50%) rotate(32deg); }
-
-    .flower-top {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 26px;
-      height: 26px;
-      background: #c084fc;
-      border-radius: 50%;
-      box-shadow: 0 0 12px #e9d5ff;
-    }
-
-    @keyframes open-flower {
-      0% {
-        height: 0;
-        opacity: 0;
-      }
-      100% {
-        height: 130px;
-        opacity: 1;
-      }
-    }
-
-    /* Envelope & Card Reveal */
-    .envelope-wrapper {
-      position: relative;
-      margin-top: 30px;
-      cursor: pointer;
-    }
-
-    .envelope {
-      width: 220px;
-      height: 140px;
-      background: #f472b6;
-      border-radius: 0 0 8px 8px;
-      position: relative;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .envelope::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      border-left: 110px solid #ec4899;
-      border-right: 110px solid #ec4899;
-      border-top: 70px solid transparent;
-      border-bottom: 70px solid #db2777;
-      border-radius: 0 0 8px 8px;
-      z-index: 2;
-    }
-
-    .card {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 190px;
-      background: #ffffff;
-      color: #333;
-      padding: 12px;
-      border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      transition: transform 0.8s ease-in-out;
-      z-index: 1;
-      text-align: center;
-      font-size: 11px;
-      line-height: 1.4;
-    }
-
-    .envelope-wrapper.open .card {
-      transform: translateX(-50%) translateY(-90px);
-      z-index: 3;
-    }
-
-    .card-title {
-      font-weight: bold;
-      margin-bottom: 4px;
-      color: #111;
-    }
-  </style>
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Floating Background Orbs / Bubbles -->
-  <div class="bubbles">
-    <div class="bubble b1"></div>
-    <div class="bubble b2"></div>
-    <div class="bubble b3"></div>
-    <div class="bubble b4"></div>
-    <div class="bubble b5"></div>
-  </div>
+<div class="scene">
 
-  <div class="container">
-    <!-- Step 1: Tap To Open -->
-    <div class="tap-btn" id="tapBtn">
-      <div class="tap-text">TAP TO OPEN</div>
-      <div class="heart-icon"></div>
+    <!-- FLOWER HEART TREE -->
+
+    <div class="heart">
+
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+        <div class="flower"></div>
+        <div class="flower orange"></div>
+
     </div>
 
-    <!-- Step 2 & 3: Revealed Flowers and Envelope -->
-    <div class="content" id="mainContent">
-      <h2 class="title">Flowers For You</h2>
+    <!-- TREE -->
 
-      <!-- Flowers Bouquet -->
-      <div class="flowers-container">
-        <div class="flower f1"><div class="flower-top"></div></div>
-        <div class="flower f2"><div class="flower-top"></div></div>
-        <div class="flower f3"><div class="flower-top"></div></div>
-        <div class="flower f4"><div class="flower-top"></div></div>
-        <div class="flower f5"><div class="flower-top"></div></div>
-      </div>
+    <div class="branch branch1"></div>
+    <div class="branch branch2"></div>
+    <div class="branch branch3"></div>
 
-      <!-- Letter / Card Envelope -->
-      <div class="envelope-wrapper" id="envelope">
-        <div class="envelope"></div>
-        <div class="card">
-          <div class="card-title">Dear Love,</div>
-          <p>Wishing you a wonderful day filled with joy and happiness!</p>
+    <div class="trunk"></div>
+
+    <!-- TEXT -->
+
+    <div class="message">
+
+        <div class="small">
+            and... make it count
         </div>
-      </div>
+
+        <h1>
+            Happy Birthday
+        </h1>
+
+        <div class="sub">
+            Here's to a year filled with happiness ❤️
+        </div>
+
     </div>
-  </div>
 
-  <script>
-    const tapBtn = document.getElementById('tapBtn');
-    const mainContent = document.getElementById('mainContent');
-    const envelope = document.getElementById('envelope');
+    <!-- PETALS -->
 
-    // Click to Open Action
-    tapBtn.addEventListener('click', () => {
-      tapBtn.classList.add('hidden');
-      mainContent.classList.add('visible');
-    });
+    <div class="petal"
+         style="left:8%;animation-duration:9s;"></div>
 
-    // Click Envelope to Open Letter Card
-    envelope.addEventListener('click', () => {
-      envelope.classList.toggle('open');
-    });
-  </script>
+    <div class="petal"
+         style="left:20%;animation-duration:11s;"></div>
+
+    <div class="petal"
+         style="left:34%;animation-duration:8s;"></div>
+
+    <div class="petal"
+         style="left:48%;animation-duration:10s;"></div>
+
+    <div class="petal"
+         style="left:63%;animation-duration:9s;"></div>
+
+    <div class="petal"
+         style="left:77%;animation-duration:12s;"></div>
+
+    <div class="petal"
+         style="left:91%;animation-duration:8s;"></div>
+
+</div>
 
 </body>
 </html>
