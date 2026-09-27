@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    width:100%;
+    height:100vh;
+    background:
+        radial-gradient(circle at 50% 45%,
+        #fff5e8 0%,
+        #ffe7d5 35%,
+        #ffc9c0 70%,
+        #ffaaa9 100%);
+    font-family:Arial, sans-serif;
+}
+
+/* Main Scene */
+.scene{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* Soft Glow */
+.glow{
+    position:absolute;
+    width:90vw;
+    height:90vw;
+    max-width:650px;
+    max-height:650px;
+    left:50%;
+    top:43%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(
+        ellipse,
+        rgba(255,255,255,.95) 0%,
+        rgba(255,220,215,.6) 35%,
+        rgba(255,190,180,.15) 65%,
+        transparent 75%
+    );
+    filter:blur(8px);
+}
+
+/* Tree */
+.tree{
+    position:absolute;
+    left:50%;
+    bottom:-5px;
+    width:12px;
+    height:43vh;
+    min-height:260px;
+    background:linear-gradient(
+        to right,
+        #321510,
+        #63261d,
+        #351510
+    );
+    border-radius:10px;
+    transform:translateX(-50%);
+    z-index:3;
+}
+
+/* Branches */
+.branch{
+    position:absolute;
+    height:8px;
+    background:#4b1d17;
+    border-radius:10px;
+    transform-origin:left center;
+}
+
+.branch.one{
+    width:150px;
+    top:45px;
+    left:5px;
+    transform:rotate(-58deg);
+}
+
+.branch.two{
+    width:130px;
+    top:75px;
+    left:3px;
+    transform:rotate(-120deg);
+}
+
+.branch.three{
+    width:125px;
+    top:60px;
+    left:5px;
+    transform:rotate(-25deg);
+}
+
+/* Heart */
+.heart{
+    position:absolute;
+    left:50%;
+    top:9%;
+    width:360px;
+    height:360px;
+    transform:translateX(-50%) rotate(-45deg);
+    animation:heartBeat 2.6s ease-in-out infinite;
+    z-index:2;
+}
+
+/* Heart Shape */
+.heart::before,
+.heart::after{
+    content:"";
+    position:absolute;
+    width:360px;
+    height:360px;
+    background:transparent;
+    border-radius:50%;
+}
+
+.heart::before{
+    top:-180px;
+    left:0;
+}
+
+.heart::after{
+    top:0;
+    left:180px;
+}
+
+/* Flowers container */
+.flowers{
+    position:absolute;
+    width:100%;
+    height:100%;
+    transform:rotate(45deg);
+}
+
+/* Individual flowers */
+.flower{
+    position:absolute;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle at 50% 50%,
+        #ffd34d 0 15%,
+        transparent 16%),
+        radial-gradient(circle at 50% 15%, #ff5b9c 0 35%, transparent 36%),
+        radial-gradient(circle at 85% 50%, #ff4f91 0 35%, transparent 36%),
+        radial-gradient(circle at 50% 85%, #ff78ad 0 35%, transparent 36%),
+        radial-gradient(circle at 15% 50%, #ff5b9c 0 35%, transparent 36%);
+    filter:drop-shadow(0 2px 2px rgba(200,50,80,.2));
+    animation:flowerFloat 3s ease-in-out infinite;
+}
+
+/* Extra flowers */
+.flower:nth-child(3n){
+    transform:scale(.8);
+}
+
+.flower:nth-child(4n){
+    transform:scale(1.25);
+}
+
+.flower:nth-child(5n){
+    filter:
+        hue-rotate(15deg)
+        drop-shadow(0 2px 2px rgba(200,50,80,.2));
+}
+
+/* Birthday Text */
+.message{
+    position:absolute;
+    left:7%;
+    bottom:15%;
+    z-index:10;
+    color:#c72e62;
+    text-align:left;
+}
+
+.small{
+    font-size:15px;
+    color:#7c4b4b;
+    margin-bottom:5px;
+    opacity:0;
+    animation:fadeIn 2s ease forwards;
+    animation-delay:1s;
+}
+
+h1{
+    font-family:cursive;
+    font-size:clamp(42px,9vw,82px);
+    font-weight:500;
+    line-height:1;
+    text-shadow:0 3px 8px rgba(160,30,70,.15);
+    opacity:0;
+    animation:slideText 2s ease forwards;
+    animation-delay:1.4s;
+}
+
+.sub{
+    margin-top:10px;
+    font-size:13px;
+    color:#8a5555;
+    opacity:0;
+    animation:fadeIn 2s ease forwards;
+    animation-delay:2s;
+}
+
+/* Floating hearts */
+.mini-heart{
+    position:absolute;
+    color:#ff6c9c;
+    font-size:18px;
+    opacity:.7;
+    animation:floatUp linear infinite;
+    z-index:5;
+}
+
+/* Button */
+.btn{
+    position:absolute;
+    left:7%;
+    bottom:7%;
+    z-index:20;
+    border:none;
+    padding:12px 24px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#ff4f91,#ff789f);
+    color:white;
+    font-size:15px;
+    box-shadow:0 8px 25px rgba(210,60,100,.25);
+    cursor:pointer;
+    transition:.3s;
+    opacity:0;
+    animation:fadeIn 2s ease forwards;
+    animation-delay:2.5s;
+}
+
+.btn:active{
+    transform:scale(.94);
+}
+
+/* Animations */
+
+@keyframes heartBeat{
+    0%,100%{
+        transform:translateX(-50%) rotate(-45deg) scale(1);
+    }
+    15%{
+        transform:translateX(-50%) rotate(-45deg) scale(1.04);
+    }
+    30%{
+        transform:translateX(-50%) rotate(-45deg) scale(1);
+    }
+    45%{
+        transform:translateX(-50%) rotate(-45deg) scale(1.04);
+    }
+    60%{
+        transform:translateX(-50%) rotate(-45deg) scale(1);
+    }
+}
+
+@keyframes flowerFloat{
+    0%,100%{
+        margin-top:0;
+    }
+    50%{
+        margin-top:-4px;
+    }
+}
+
+@keyframes slideText{
+    from{
+        opacity:0;
+        transform:translateX(-30px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(20px);
+        opacity:0;
+    }
+    20%{
+        opacity:.7;
+    }
+    100%{
+        transform:translateY(-100vh);
+        opacity:0;
+    }
+}
+
+/* Mobile */
+@media(max-width:600px){
+
+    .heart{
+        width:290px;
+        height:290px;
+        top:12%;
+    }
+
+    .heart::before,
+    .heart::after{
+        width:290px;
+        height:290px;
+    }
+
+    .heart::before{
+        top:-145px;
+    }
+
+    .heart::after{
+        left:145px;
+    }
+
+    .flower{
+        width:19px;
+        height:19px;
+    }
+
+    .tree{
+        height:39vh;
+    }
+
+    .message{
+        bottom:14%;
+        left:5%;
+    }
+
+    h1{
+        font-size:48px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+
+    <div class="glow"></div>
+
+    <!-- Heart Flower Tree -->
+    <div class="heart">
+        <div class="flowers" id="flowers"></div>
+    </div>
+
+    <!-- Tree trunk -->
+    <div class="tree">
+        <div class="branch one"></div>
+        <div class="branch two"></div>
+        <div class="branch three"></div>
+    </div>
+
+    <!-- Birthday message -->
+    <div class="message">
+        <div class="small">and... make it count</div>
+        <h1>Happy Birthday</h1>
+        <div class="sub">Here's to a year filled with happiness ❤️</div>
+    </div>
+
+    <button class="btn" onclick="showWish()">
+        💝 Make a Wish
+    </button>
+
+    <div id="floatingHearts"></div>
+
+</div>
+
+<script>
+
+/* Create flowers */
+const flowerBox = document.getElementById("flowers");
+
+const positions = [
+    [45,8],[55,8],[65,10],[35,12],[48,15],[60,16],
+    [72,17],[28,20],[40,22],[52,22],[65,23],[78,25],
+    [22,28],[34,30],[47,29],[59,30],[72,31],
+    [82,34],[18,37],[30,38],[43,37],[55,39],[68,39],
+    [77,42],[25,45],[38,45],[50,45],[62,46],[72,48],
+    [32,52],[45,52],[57,53],[67,55],
+    [40,59],[52,59],[60,61]
+];
+
+positions.forEach((pos,index)=>{
+    const flower=document.createElement("div");
+    flower.className="flower";
+
+    flower.style.left=pos[0]+"%";
+    flower.style.top=pos[1]+"%";
+
+    flower.style.animationDelay=(index*0.08)+"s";
+
+    flowerBox.appendChild(flower);
+});
+
+
+/* Floating hearts */
+const heartBox=document.getElementById("floatingHearts");
+
+function createHeart(){
+
+    const heart=document.createElement("div");
+
+    heart.className="mini-heart";
+    heart.innerHTML="♥";
+
+    heart.style.left=Math.random()*100+"%";
+    heart.style.bottom="-30px";
+
+    heart.style.fontSize=(12+Math.random()*18)+"px";
+
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
+
+    heartBox.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },10000);
+}
+
+setInterval(createHeart,900);
+
+
+/* Birthday button */
+function showWish(){
+
+    const message=document.createElement("div");
+
+    message.innerHTML="🎂 Happy Birthday! ❤️";
+
+    message.style.position="fixed";
+    message.style.left="50%";
+    message.style.top="50%";
+    message.style.transform="translate(-50%,-50%)";
+    message.style.zIndex="100";
+    message.style.background="rgba(255,255,255,.95)";
+    message.style.padding="25px 35px";
+    message.style.borderRadius="20px";
+    message.style.fontSize="24px";
+    message.style.color="#d12f68";
+    message.style.boxShadow="0 10px 40px rgba(0,0,0,.2)";
+
+    document.body.appendChild(message);
+
+    setTimeout(()=>{
+        message.remove();
+    },2500);
+}
+
+</script>
+
+</body>
+</html>
