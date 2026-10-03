@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dashboard - Earn2605</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overflow-x:hidden}
+body{font-family:'Poppins',sans-serif;background:#f5f7fb;color:#1e293b;padding-bottom:20px}
+
+/* ============ TOPBAR ============ */
+.topbar{
+  background:#fff;padding:12px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.menu-btn,.avatar-btn{
+  width:44px;height:44px;border-radius:14px;
+  background:#f1f5f9;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;transition:all .2s;
+}
+.menu-btn:active,.avatar-btn:active{transform:scale(.92)}
+.avatar-btn{
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  color:#fff;font-weight:800;font-size:1rem;
+  overflow:hidden;padding:0;
+  box-shadow:0 0 0 2px #fff,0 0 0 3.5px #3b82f6;
+}
+.avatar-btn img{width:100%;height:100%;object-fit:cover}
+.page-title{
+  font-size:1rem;font-weight:800;color:#0f172a;
+  letter-spacing:1px;text-transform:uppercase;
+}
+
+/* ============ SIDE MENU ============ */
+.overlay{
+  position:fixed;inset:0;background:rgba(15,23,42,0.5);
+  z-index:998;opacity:0;visibility:hidden;transition:all .3s;
+  backdrop-filter:blur(2px);
+}
+.overlay.open{opacity:1;visibility:visible}
+
+.side-menu{
+  position:fixed;top:0;left:-290px;width:280px;height:100%;
+  background:#fff;z-index:999;transition:left .3s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;box-shadow:4px 0 30px rgba(0,0,0,0.15);
+}
+.side-menu.open{left:0}
+.menu-head{
+  padding:20px 18px;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid #f1f5f9;
+}
+.menu-head .brand{
+  display:flex;align-items:center;gap:10px;
+  font-weight:800;color:#0f172a;font-size:1.15rem;
+}
+.brand-mark{
+  width:36px;height:36px;border-radius:11px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;
+}
+.brand span{color:#2563eb}
+.close-btn{
+  background:#f1f5f9;border:none;width:34px;height:34px;
+  border-radius:10px;font-size:1rem;cursor:pointer;
+  color:#64748b;display:flex;align-items:center;justify-content:center;
+}
+.menu-list{list-style:none;padding:14px 0}
+.menu-list li a{
+  display:flex;align-items:center;gap:14px;
+  padding:13px 20px;color:#334155;cursor:pointer;
+  font-size:.92rem;font-weight:600;
+  transition:all .2s;position:relative;
+}
+.menu-list li a .ico{
+  width:24px;text-align:center;font-size:1.15rem;
+}
+.menu-list li a:active{background:#f1f5f9}
+.menu-list li a.active{
+  background:linear-gradient(90deg,#3b82f6,#2563eb);
+  color:#fff;border-radius:10px;
+  margin:2px 10px;padding-left:14px;
+  box-shadow:0 4px 12px rgba(37,99,235,0.3);
+}
+.menu-list li.logout a{color:#dc2626}
+.menu-list li.logout a.active,
+.menu-list li.logout a:active{background:#fee2e2}
+
+/* ============ CONTENT ============ */
+.content{padding:16px;max-width:640px;margin:0 auto}
+.page{display:none}
+.page.active{display:block;animation:fadeUp .35s ease-out}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ============ DASHBOARD ============ */
+.dash-card{
+  background:linear-gradient(160deg,#fde047,#facc15 40%,#eab308);
+  border-radius:24px;padding:28px 20px;text-align:center;
+  color:#1e293b;margin-bottom:18px;
+  box-shadow:0 12px 30px rgba(234,179,8,0.35);
+  position:relative;overflow:hidden;
+}
+.dash-card::before{
+  content:'';position:absolute;top:-50%;right:-30%;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,0.2);
+}
+.dash-card::after{
+  content:'';position:absolute;bottom:-40%;left:-20%;
+  width:180px;height:180px;border-radius:50%;
+  background:rgba(255,255,255,0.15);
+}
+.dash-avatar{
+  width:95px;height:95px;border-radius:50%;
+  border:4px solid #0f172a;margin:0 auto 16px;
+  background:#fff;position:relative;z-index:1;
+  overflow:hidden;display:flex;align-items:center;
+  justify-content:center;font-size:2rem;font-weight:800;color:#2563eb;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+.dash-avatar img{width:100%;height:100%;object-fit:cover}
+.dash-card h1{
+  font-size:1.7rem;font-weight:900;margin-bottom:12px;
+  letter-spacing:-.02em;color:#0f172a;position:relative;z-index:1;
+}
+.verified-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.85);
+  color:#16a34a;padding:7px 16px;
+  border-radius:50px;font-size:.82rem;
+  font-weight:700;margin-bottom:14px;
+  position:relative;z-index:1;
+  backdrop-filter:blur(10px);
+}
+.powered{
+  font-size:.9rem;font-weight:700;color:#0f172a;
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;position:relative;z-index:1;
+}
+
+.earn-card{
+  background:#fff;border-radius:18px;padding:22px;
+  margin-bottom:14px;display:flex;align-items:center;gap:16px;
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  border:1px solid #e2e8f0;
+  transition:transform .2s;
+}
+.earn-card:active{transform:scale(.98)}
+.earn-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#3b82f6,#8b5cf6,#fbbf24);
+}
+.earn-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;color:#fff;flex-shrink:0;
+  box-shadow:0 6px 16px rgba(59,130,246,0.35);
+}
+.earn-icon.g{background:linear-gradient(135deg,#22c55e,#15803d);box-shadow:0 6px 16px rgba(34,197,94,0.35)}
+.earn-icon.p{background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 6px 16px rgba(139,92,246,0.35)}
+.earn-icon.o{background:linear-gradient(135deg,#f97316,#c2410c);box-shadow:0 6px 16px rgba(249,115,22,0.35)}
+.earn-info .lbl{color:#64748b;font-size:.82rem;font-weight:600;margin-bottom:4px}
+.earn-info .val{font-size:1.7rem;font-weight:900;color:#0f172a;letter-spacing:-.02em}
+
+/* ============ WALLET ============ */
+.user-strip{
+  background:linear-gradient(135deg,#dbeafe,#e0e7ff);
+  border-radius:20px;padding:16px;
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+  box-shadow:0 4px 16px rgba(99,102,241,0.15);
+}
+.arrow-btn{
+  width:42px;height:42px;border-radius:50%;
+  background:#fff;display:flex;align-items:center;
+  justify-content:center;font-size:1.2rem;
+  color:#0f172a;font-weight:800;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.user-strip .info{flex:1;min-width:0}
+.user-strip .info h3{
+  font-size:1.05rem;font-weight:800;color:#0f172a;
+  margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.user-strip .info p{
+  font-size:.78rem;color:#475569;display:flex;
+  align-items:center;gap:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.date-chip{
+  background:#fff;padding:8px 12px;border-radius:14px;
+  text-align:center;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+.date-chip .d1{font-size:.65rem;color:#64748b;font-weight:700;display:block}
+.date-chip .d2{font-size:.95rem;color:#0f172a;font-weight:900}
+
+.balance-card{
+  background:#fff;border-radius:18px;padding:20px;
+  margin-bottom:14px;display:flex;align-items:center;gap:14px;
+  position:relative;overflow:hidden;
+  border:1px solid #e2e8f0;
+}
+.balance-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#3b82f6,#8b5cf6,#fbbf24);
+}
+.bal-icon{
+  width:52px;height:52px;border-radius:50%;
+  background:#eff6ff;display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;font-weight:900;color:#2563eb;flex-shrink:0;
+}
+.bal-icon.g{background:#dcfce7;color:#16a34a}
+.bal-icon.r{background:#fee2e2;color:#dc2626}
+.bal-info .lbl{
+  color:#64748b;font-size:.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;
+}
+.bal-info .val{font-size:1.6rem;font-weight:900;color:#0f172a}
+.bal-info .sub{font-size:.75rem;color:#94a3b8;margin-top:2px}
+
+.btn-o,.btn-d{
+  display:block;width:100%;padding:15px;border-radius:14px;
+  font-family:inherit;font-size:.92rem;font-weight:700;
+  cursor:pointer;margin-top:10px;text-align:center;
+  text-decoration:none;transition:transform .15s;
+  border:none;
+}
+.btn-o:active,.btn-d:active{transform:scale(.97)}
+.btn-o{background:#fff;color:#0f172a;border:1.5px solid #cbd5e1}
+.btn-d{
+  background:#0f172a;color:#fff;
+  box-shadow:0 6px 18px rgba(15,23,42,0.3);
+}
+
+/* ============ REPORTS ============ */
+.report-user{
+  background:#fff;border-radius:20px;padding:18px;
+  margin-bottom:16px;border:1px solid #e2e8f0;
+}
+.report-user-top{
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+}
+.report-avatar{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.4rem;flex-shrink:0;
+}
+.report-user-top .info{flex:1}
+.report-user-top h3{font-size:1.05rem;font-weight:800;color:#0f172a;margin-bottom:2px}
+.report-user-top p{font-size:.78rem;color:#64748b;display:flex;align-items:center;gap:5px}
+.active-badge{
+  background:#dcfce7;color:#16a34a;
+  padding:6px 12px;border-radius:50px;
+  font-size:.72rem;font-weight:800;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.active-badge::before{content:'●';font-size:.9rem}
+
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tag{
+  background:#f1f5f9;padding:7px 14px;border-radius:50px;
+  font-size:.78rem;font-weight:700;color:#334155;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.tag.p{background:#f5f3ff;color:#7c3aed}
+
+.btn-row{display:flex;gap:10px;margin-bottom:16px}
+.btn-row .b{
+  flex:1;padding:14px;border-radius:14px;border:none;
+  font-family:inherit;font-size:.85rem;font-weight:700;
+  color:#fff;cursor:pointer;transition:transform .15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-row .b:active{transform:scale(.96)}
+.b-green{background:linear-gradient(135deg,#16a34a,#15803d);box-shadow:0 6px 16px rgba(22,163,74,0.3)}
+.b-purple{background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 6px 16px rgba(139,92,246,0.3)}
+
+.search-box{
+  background:#fff;border:1px solid #e2e8f0;
+  border-radius:14px;padding:13px 16px;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.search-box input{
+  border:none;outline:none;background:transparent;
+  font-family:inherit;font-size:.9rem;flex:1;color:#0f172a;
+}
+.search-box input::placeholder{color:#94a3b8}
+
+.stat-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:14px;
+}
+.stat-mini{
+  background:#fff;padding:14px 8px;border-radius:14px;
+  text-align:center;border:1px solid #e2e8f0;
+}
+.stat-mini .n{
+  font-size:1.4rem;font-weight:900;color:#8b5cf6;margin-bottom:2px;
+}
+.stat-mini .l{
+  font-size:.62rem;font-weight:700;color:#64748b;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+
+.tab-row{
+  display:flex;gap:8px;margin-bottom:16px;
+  overflow-x:auto;padding-bottom:4px;
+  scrollbar-width:none;
+}
+.tab-row::-webkit-scrollbar{display:none}
+.tab{
+  padding:10px 18px;border-radius:50px;border:none;
+  font-family:inherit;font-size:.82rem;font-weight:700;
+  background:#fff;color:#64748b;cursor:pointer;
+  white-space:nowrap;border:1px solid #e2e8f0;
+  transition:all .2s;
+  display:flex;align-items:center;gap:6px;
+}
+.tab.active{
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  color:#fff;border-color:transparent;
+  box-shadow:0 4px 12px rgba(139,92,246,0.3);
+}
+
+.table-card{
+  background:#fff;border-radius:18px;padding:18px;
+  border:1px solid #e2e8f0;overflow:hidden;
+}
+.table-card h3{
+  font-size:.92rem;font-weight:800;color:#0f172a;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.table-card h3 .cicon{
+  width:34px;height:34px;border-radius:10px;
+  background:#f5f3ff;display:flex;align-items:center;
+  justify-content:center;font-size:1rem;
+}
+.table-wrap{overflow-x:auto;margin:0 -18px;padding:0 18px}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{
+  background:#f8fafc;color:#64748b;padding:11px 10px;
+  text-align:left;font-weight:700;font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.5px;
+  white-space:nowrap;
+}
+td{
+  padding:14px 10px;border-top:1px solid #f1f5f9;
+  white-space:nowrap;font-size:.85rem;
+}
+.kyc-pending{
+  background:#fef3c7;color:#92400e;
+  padding:6px 12px;border-radius:8px;
+  font-size:.78rem;font-weight:700;
+}
+
+/* ============ PROJECTS ============ */
+.projects-header{
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:#fff;border-radius:20px;padding:22px;
+  margin-bottom:18px;display:flex;gap:14px;align-items:flex-start;
+  box-shadow:0 8px 24px rgba(99,102,241,0.3);
+}
+.mega-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;flex-shrink:0;
+  backdrop-filter:blur(10px);
+}
+.projects-header .txt h2{font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.projects-header .txt p{font-size:.8rem;opacity:.9;line-height:1.5}
+
+.proj-table-card{
+  background:#fff;border-radius:18px;overflow:hidden;
+  border:1px solid #e2e8f0;
+}
+.proj-table-card table{font-size:.82rem}
+.proj-table-card th{
+  background:#eef2ff;color:#4338ca;
+  padding:12px 10px;font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.5px;font-weight:800;
+}
+.proj-table-card td{padding:14px 10px;border-top:1px solid #f1f5f9}
+.app-cell{display:flex;align-items:center;gap:10px}
+.app-logo{
+  width:38px;height:38px;border-radius:10px;
+  background:#f1f5f9;display:flex;align-items:center;
+  justify-content:center;font-size:1.2rem;flex-shrink:0;
+}
+.payout-cell .p1{color:#16a34a;font-weight:800;font-size:.85rem;display:block}
+.payout-cell .p2{color:#dc2626;font-weight:800;font-size:.85rem;display:block;margin-top:2px}
+.payout-cell .amt{color:#0f172a}
+.payout-cell .txt{color:#64748b;font-weight:500;font-size:.75rem;margin-left:4px}
+.pro-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:#ede9fe;color:#6d28d9;
+  padding:3px 10px;border-radius:50px;
+  font-size:.65rem;font-weight:800;
+  margin-top:6px;
+}
+.status-active{
+  background:#dcfce7;color:#16a34a;
+  padding:6px 12px;border-radius:50px;
+  font-size:.72rem;font-weight:800;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.status-active::before{content:'●';font-size:.85rem}
+.btn-copy-small{
+  background:#ede9fe;color:#6d28d9;border:none;
+  padding:7px 14px;border-radius:8px;
+  font-family:inherit;font-size:.75rem;font-weight:700;
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+}
+.btn-view-small{
+  background:transparent;color:#7c3aed;
+  border:1.5px solid #ddd6fe;
+  padding:6px 14px;border-radius:8px;
+  font-family:inherit;font-size:.75rem;font-weight:700;
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+}
+
+/* ============ TASKS ============ */
+.tasks-hero{
+  text-align:center;margin-bottom:24px;
+}
+.tasks-hero h1{
+  font-size:2.1rem;font-weight:900;color:#1e3a8a;
+  letter-spacing:-.02em;margin-bottom:6px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.tasks-hero p{
+  color:#64748b;font-size:.82rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.task-user-card{
+  background:#fff;border-radius:20px;padding:20px;
+  display:flex;gap:16px;align-items:center;
+  margin-bottom:22px;border:1px solid #e2e8f0;
+}
+.task-user-card .tu-avatar{
+  width:70px;height:70px;border-radius:50%;
+  background:linear-gradient(135deg,#dbeafe,#e0e7ff);
+  overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;font-weight:800;color:#2563eb;
+  border:3px solid #fff;
+  box-shadow:0 4px 12px rgba(37,99,235,0.15);
+}
+.task-user-card .tu-avatar img{width:100%;height:100%;object-fit:cover}
+.tu-info{flex:1}
+.tu-info h3{
+  font-size:1rem;font-weight:800;color:#0f172a;
+  display:flex;align-items:center;gap:6px;margin-bottom:12px;
+}
+.tu-info h3 .check{color:#16a34a}
+.tu-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.tu-stat{
+  background:#eff6ff;border-radius:12px;padding:12px;
+  text-align:center;
+}
+.tu-stat .l{
+  font-size:.65rem;color:#1d4ed8;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;
+}
+.tu-stat .v{font-size:1.2rem;font-weight:900;color:#1e3a8a}
+
+.section-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.section-head .num{
+  width:38px;height:38px;border-radius:50%;
+  background:#1e3a8a;color:#fff;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.section-head h2{
+  font-size:1.15rem;font-weight:900;color:#1e3a8a;
+  letter-spacing:-.02em;
+}
+
+.upload-card{
+  background:#fff;border-radius:20px;padding:22px;
+  border:1px solid #e2e8f0;margin-bottom:16px;
+}
+.upload-zone{
+  border:2.5px dashed #cbd5e1;border-radius:16px;
+  padding:32px 20px;text-align:center;
+  margin-bottom:16px;background:#f8fafc;
+  transition:all .2s;
+}
+.upload-zone:active{border-color:#3b82f6;background:#eff6ff}
+.upload-zone .up-icon{font-size:2.5rem;color:#1e40af;margin-bottom:12px}
+.upload-zone .up-txt{font-weight:800;color:#1e3a8a;font-size:.88rem;letter-spacing:.5px;text-transform:uppercase}
+.file-chip{
+  background:#eff6ff;border-radius:50px;padding:8px 16px;
+  display:inline-block;font-size:.75rem;font-weight:700;
+  color:#1e40af;margin-bottom:14px;letter-spacing:.5px;
+}
+.btn-submit{
+  width:100%;padding:16px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#1e40af,#1e3a8a);
+  color:#fff;font-family:inherit;font-weight:800;
+  font-size:.95rem;cursor:pointer;letter-spacing:1px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 8px 20px rgba(30,64,175,0.3);
+  transition:transform .15s;
+}
+.btn-submit:active{transform:scale(.97)}
+.btn-conditions{
+  width:100%;padding:14px;border:none;border-radius:14px;
+  background:#eff6ff;color:#1e40af;
+  font-family:inherit;font-weight:800;
+  font-size:.85rem;cursor:pointer;margin-top:10px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+
+/* ============ REWARDS ============ */
+.rewards-header{
+  background:linear-gradient(135deg,#7c3aed,#5b21b6);
+  border-radius:24px 24px 0 0;
+  padding:40px 20px;text-align:center;
+  color:#fff;margin:-16px -16px 0;position:relative;
+}
+.rewards-header h1{
+  font-size:1.8rem;font-weight:900;
+  letter-spacing:1px;margin-bottom:8px;
+}
+.rewards-header::after{
+  content:'';position:absolute;bottom:20px;left:50%;
+  transform:translateX(-50%);width:80px;height:3px;
+  background:#fbbf24;border-radius:2px;
+}
+.rewards-list{padding-top:20px}
+.reward-card{
+  background:#fff;border-radius:20px;overflow:hidden;
+  margin-bottom:18px;border:1px solid #e2e8f0;
+  box-shadow:0 4px 16px rgba(0,0,0,0.05);
+}
+.reward-banner{
+  background:linear-gradient(135deg,#1e293b,#0f172a);
+  padding:22px 18px;color:#fff;position:relative;
+  display:flex;justify-content:space-between;align-items:center;
+  min-height:130px;
+}
+.reward-banner .rb-content{position:relative;z-index:1}
+.rb-tag{
+  font-size:.62rem;font-weight:700;letter-spacing:1.5px;
+  opacity:.8;margin-bottom:6px;
+}
+.rb-title{
+  font-size:1.4rem;font-weight:900;color:#fbbf24;
+  letter-spacing:1px;margin-bottom:4px;
+}
+.rb-sub{
+  font-size:.7rem;opacity:.85;
+  display:flex;align-items:center;gap:6px;margin-bottom:6px;
+}
+.rb-box{
+  background:rgba(251,191,36,0.15);
+  border:1.5px solid rgba(251,191,36,0.5);
+  border-radius:8px;padding:8px 12px;
+  font-size:.72rem;color:#fbbf24;font-weight:700;
+  display:inline-block;
+}
+.free-tag{
+  position:absolute;top:14px;right:14px;
+  background:#ef4444;color:#fff;
+  padding:5px 14px;border-radius:50px;
+  font-size:.7rem;font-weight:800;z-index:2;
+}
+.reward-body{padding:20px}
+.reward-body h3{
+  font-size:1.1rem;font-weight:900;color:#0f172a;
+  margin-bottom:6px;
+}
+.reward-body .amt{
+  color:#dc2626;font-weight:800;font-size:1rem;
+  margin-bottom:10px;
+}
+.reward-body .desc{
+  color:#64748b;font-size:.85rem;margin-bottom:16px;
+}
+.btn-details{
+  float:right;background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;border:none;padding:11px 22px;
+  border-radius:50px;font-family:inherit;
+  font-weight:800;font-size:.85rem;
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  box-shadow:0 6px 16px rgba(239,68,68,0.35);
+  transition:transform .15s;
+}
+.btn-details:active{transform:scale(.96)}
+
+/* ============ PROFILE ============ */
+.profile-hero{
+  text-align:center;padding:20px 0;
+  position:relative;
+}
+.settings-btn{
+  position:absolute;top:20px;right:0;
+  width:42px;height:42px;border-radius:12px;
+  background:#f1f5f9;border:none;cursor:pointer;
+  font-size:1.2rem;color:#64748b;
+  display:flex;align-items:center;justify-content:center;
+}
+.profile-hero .big-avatar{
+  width:130px;height:130px;border-radius:50%;
+  margin:0 auto 18px;overflow:hidden;
+  border:4px solid #fff;
+  box-shadow:0 8px 24px rgba(0,0,0,0.12);
+  background:linear-gradient(135deg,#dbeafe,#e0e7ff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;font-weight:900;color:#2563eb;
+}
+.profile-hero .big-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-hero .p-name{
+  font-size:1rem;font-weight:800;color:#475569;
+  letter-spacing:3px;text-transform:uppercase;
+}
+.profile-hero .p-name .dot{color:#cbd5e1;margin:0 8px}
+.profile-divider{
+  height:1px;background:#e2e8f0;margin:24px 0;
+}
+
+/* Profile menu dropdown */
+.profile-menu{
+  background:#fff;border-radius:18px;
+  border:1px solid #e2e8f0;overflow:hidden;
+  margin-top:16px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.06);
+  animation:fadeUp .3s;
+}
+.pm-item{
+  padding:16px 20px;text-align:center;
+  font-size:.95rem;font-weight:700;color:#475569;
+  cursor:pointer;transition:background .2s;
+  border-bottom:1px solid #f1f5f9;
+  text-transform:uppercase;letter-spacing:1.5px;
+}
+.pm-item:last-child{border-bottom:none}
+.pm-item:active{background:#f8fafc}
+.pm-item.danger{color:#dc2626}
+.pm-item.cancel{color:#94a3b8;border-top:2px solid #f1f5f9}
+
+/* Edit profile */
+.form-group{margin-bottom:18px}
+.form-label{
+  display:block;font-size:.8rem;font-weight:800;
+  color:#334155;margin-bottom:8px;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.form-input{
+  width:100%;padding:14px 16px;
+  border:1.5px solid #cbd5e1;border-radius:12px;
+  font-family:inherit;font-size:.92rem;
+  background:#fff;transition:all .2s;color:#0f172a;
+}
+.form-input:focus{
+  outline:none;border-color:#3b82f6;
+  box-shadow:0 0 0 4px rgba(59,130,246,0.1);
+}
+.btn-update{
+  width:100%;padding:15px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  color:#fff;font-family:inherit;font-weight:800;
+  font-size:.9rem;cursor:pointer;
+  text-transform:uppercase;letter-spacing:1.5px;
+  box-shadow:0 6px 16px rgba(59,130,246,0.3);
+  transition:transform .15s;
+}
+.btn-update:active{transform:scale(.97)}
+
+/* Account sections */
+.acc-section{
+  background:#fff;border-radius:16px;
+  border:1px solid #e2e8f0;margin-bottom:12px;
+  overflow:hidden;
+}
+.acc-head{
+  padding:18px 20px;display:flex;
+  justify-content:space-between;align-items:center;
+  cursor:pointer;font-weight:800;
+  font-size:.9rem;color:#0f172a;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.acc-head .ico{
+  font-size:1.1rem;margin-right:12px;color:#64748b;
+}
+.acc-head .arr{
+  transition:transform .3s;color:#94a3b8;
+}
+.acc-head.open .arr{transform:rotate(180deg)}
+.acc-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease,padding .3s;
+  padding:0 20px;
+}
+.acc-body.open{
+  max-height:600px;padding:0 20px 20px;
+}
+
+/* ============ EMPTY ============ */
+.empty{
+  text-align:center;padding:60px 20px;color:#94a3b8;
+}
+.empty .e-ico{font-size:3.5rem;margin-bottom:14px}
+.empty h3{font-size:1.1rem;color:#64748b;margin-bottom:6px}
+.empty p{font-size:.85rem}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:30px;left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:#0f172a;color:#fff;
+  padding:14px 24px;border-radius:50px;
+  font-size:.88rem;font-weight:700;
+  z-index:2000;opacity:0;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+.toast.show{
+  transform:translateX(-50%) translateY(0);opacity:1;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:400px){
+  .dash-card h1{font-size:1.45rem}
+  .dash-avatar{width:80px;height:80px}
+  .earn-info .val{font-size:1.5rem}
+  .stat-mini .n{font-size:1.15rem}
+  .stat-mini .l{font-size:.55rem}
+}
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- SIDE MENU -->
+<aside class="side-menu" id="sideMenu">
+  <div class="menu-head">
+    <div class="brand">
+      <div class="brand-mark">E</div>
+      Earn<span>2605</span>
+    </div>
+    <button class="close-btn" onclick="closeMenu()">✕</button>
+  </div>
+  <ul class="menu-list" id="menuList">
+    <li><a onclick="showPage('wallet')" data-page="wallet"><span class="ico">💼</span> Wallet</a></li>
+    <li><a onclick="showPage('dashboard')" data-page="dashboard"><span class="ico">📊</span> Dashboard</a></li>
+    <li><a onclick="showPage('performers')" data-page="performers"><span class="ico">🏆</span> Top Performers</a></li>
+    <li><a onclick="showPage('reports')" data-page="reports"><span class="ico">📋</span> Reports</a></li>
+    <li><a onclick="showPage('projects')" data-page="projects"><span class="ico">💼</span> Projects</a></li>
+    <li><a onclick="showPage('leads')" data-page="leads"><span class="ico">🎯</span> Get Leads</a></li>
+    <li><a onclick="showPage('tasks')" data-page="tasks"><span class="ico">📝</span> Tasks</a></li>
+    <li><a onclick="showPage('rewards')" data-page="rewards"><span class="ico">🎁</span> Rewards</a></li>
+    <li><a onclick="showPage('profile')" data-page="profile"><span class="ico">👤</span> My Profile</a></li>
+    <li class="logout"><a onclick="logout()"><span class="ico">🚪</span> Logout</a></li>
+  </ul>
+</aside>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <button class="menu-btn" onclick="openMenu()">☰</button>
+  <div class="page-title" id="topTitle">DASHBOARD</div>
+  <button class="avatar-btn" onclick="showPage('profile')" id="topAvatar">A</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <div class="page active" id="page-dashboard">
+    <div class="dash-card">
+      <div class="dash-avatar" id="dashAvatar">A</div>
+      <h1 id="dashName">User</h1>
+      <div class="verified-badge">✓ Verified Member</div>
+      <div class="powered">🚀 Powered by Zero Investment Platform</div>
+    </div>
+
+    <div class="earn-card">
+      <div class="earn-icon">💳</div>
+      <div class="earn-info">
+        <div class="lbl">Today's Earning</div>
+        <div class="val">₹ 0</div>
+      </div>
+    </div>
+
+    <div class="earn-card">
+      <div class="earn-icon g">📅</div>
+      <div class="earn-info">
+        <div class="lbl">7 Days Earning</div>
+        <div class="val">₹ 0</div>
+      </div>
+    </div>
+
+    <div class="earn-card">
+      <div class="earn-icon p">📈</div>
+      <div class="earn-info">
+        <div class="lbl">All Time Earning</div>
+        <div class="val">₹ 0</div>
+      </div>
+    </div>
+
+    <div class="earn-card">
+      <div class="earn-icon o">👥</div>
+      <div class="earn-info">
+        <div class="lbl">Total Referrals</div>
+        <div class="val">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== WALLET ===================== -->
+  <div class="page" id="page-wallet">
+    <div class="user-strip">
+      <div class="arrow-btn">→</div>
+      <div class="info">
+        <h3 id="wName">User</h3>
+        <p>✉️ <span id="wEmail">user@example.com</span> 🔒</p>
+      </div>
+      <div class="date-chip">
+        <span class="d1" id="wDay">SUN</span>
+        <span class="d2" id="wDate">4 OCT</span>
+      </div>
+    </div>
+
+    <div class="balance-card">
+      <div class="bal-icon">₹</div>
+      <div class="bal-info">
+        <div class="lbl">Total Balance</div>
+        <div class="val">₹ 0</div>
+        <div class="sub">overall</div>
+      </div>
+    </div>
+
+    <div class="balance-card">
+      <div class="bal-icon g">✓</div>
+      <div class="bal-info">
+        <div class="lbl">Withdrawable</div>
+        <div class="val">₹ 0</div>
+        <div class="sub">can withdraw</div>
+      </div>
+    </div>
+
+    <div class="balance-card">
+      <div class="bal-icon r">🔒</div>
+      <div class="bal-info">
+        <div class="lbl">Hold</div>
+        <div class="val">₹ 0</div>
+        <div class="sub">locked</div>
+      </div>
+    </div>
+
+    <button class="btn-o" onclick="showToast('Bank account form')">+ Add Bank Account</button>
+    <button class="btn-d" onclick="showToast('Withdrawal request')">↑ Withdrawal Now</button>
+    <button class="btn-o" onclick="showToast('Transactions')">☰ Show Transactions</button>
+  </div>
+
+  <!-- ===================== REPORTS ===================== -->
+  <div class="page" id="page-reports">
+    <div class="report-user">
+      <div class="report-user-top">
+        <div class="report-avatar" id="rAvatar">👤</div>
+        <div class="info">
+          <h3 id="rName">User</h3>
+          <p>👤 Sponsor: —</p>
+        </div>
+        <div class="active-badge">Active</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">👤 Sponsor</span>
+        <span class="tag p">❓ How Check?</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="b b-green" onclick="showToast('Submit work')">➤ Submit Work</button>
+      <button class="b b-purple" onclick="showToast('Check report')">🔍 Check Report</button>
+    </div>
+
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="Search app name or mobile number">
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-mini"><div class="n">0</div><div class="l">Total</div></div>
+      <div class="stat-mini"><div class="n">0</div><div class="l">Payments</div></div>
+      <div class="stat-mini"><div class="n">0</div><div class="l">To Do</div></div>
+      <div class="stat-mini"><div class="n">0</div><div class="l">Incomplete</div></div>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab active">🕐 Recent</button>
+      <button class="tab">📋 To Do</button>
+      <button class="tab">💳 Payments</button>
+      <button class="tab">⚙️ All</button>
+    </div>
+
+    <div class="table-card">
+      <h3><span class="cicon">🕐</span> Recently Updated</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>App</th><th>Mobile</th><th>KYC</th><th>Date</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="kyc-pending">No Data</span></td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <div class="page" id="page-projects">
+    <div class="projects-header">
+      <div class="mega-icon">📢</div>
+      <div class="txt">
+        <h2>October Projects Console</h2>
+        <p>Access active app links and view approved payout with conditions for October</p>
+      </div>
+    </div>
+
+    <div class="proj-table-card">
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr><th>#</th><th>App</th><th>Payout</th><th>Status</th><th>Link</th><th>Rules</th></tr>
+          </thead>
+          <tbody id="projectsBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TASKS ===================== -->
+  <div class="page" id="page-tasks">
+    <div class="tasks-hero">
+      <h1>➜ GET TASK</h1>
+      <p>Complete simple tasks & earn free</p>
+    </div>
+
+    <div class="task-user-card">
+      <div class="tu-avatar" id="taskAvatar">A</div>
+      <div class="tu-info">
+        <h3><span id="taskName">USER</span> <span class="check">✓</span></h3>
+        <div class="tu-stats">
+          <div class="tu-stat">
+            <div class="l">Tasks Completed</div>
+            <div class="v">0</div>
+          </div>
+          <div class="tu-stat">
+            <div class="l">Total Earning</div>
+            <div class="v">₹0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">1</div>
+      <h2>EARN FROM EDITING</h2>
+    </div>
+
+    <div class="upload-card">
+      <div class="upload-zone" onclick="showToast('File picker')">
+        <div class="up-icon">☁️</div>
+        <div class="up-txt">Upload Image or Video</div>
+      </div>
+      <div style="text-align:center">
+        <div class="file-chip">NO FILE SELECTED</div>
+      </div>
+      <button class="btn-submit" onclick="showToast('Submitted!')">⬆ SUBMIT</button>
+      <button class="btn-conditions" onclick="showToast('Conditions')">☰ CHECK CONDITIONS</button>
+    </div>
+  </div>
+
+  <!-- ===================== REWARDS ===================== -->
+  <div class="page" id="page-rewards">
+    <div class="rewards-header">
+      <h1>ACTIVE REWARDS</h1>
+    </div>
+
+    <div class="rewards-list">
+      <div class="reward-card">
+        <div class="reward-banner">
+          <div class="free-tag">FREE</div>
+          <div class="rb-content">
+            <div class="rb-tag">DIGITAL E-LEARNING</div>
+            <div class="rb-title">EARNER COMMUNITY</div>
+            <div class="rb-sub">POWERED BY EC FINTECH</div>
+            <div class="rb-box">NO INVESTMENT</div>
+          </div>
+        </div>
+        <div class="reward-body">
+          <h3>EarnxMax</h3>
+          <div class="amt">Get Bonus Upto ₹200</div>
+          <div class="desc">Complete 3 Activations</div>
+          <button class="btn-details" onclick="showToast('Reward details')">Details ›</button>
+        </div>
+      </div>
+
+      <div class="reward-card">
+        <div class="reward-banner">
+          <div class="free-tag">FREE</div>
+          <div class="rb-content">
+            <div class="rb-tag">DIGITAL E-LEARNING</div>
+            <div class="rb-title">EARNER COMMUNITY</div>
+            <div class="rb-sub">POWERED BY EC FINTECH</div>
+            <div class="rb-box">NO INVESTMENT</div>
+          </div>
+        </div>
+        <div class="reward-body">
+          <h3>Weekly Bonus</h3>
+          <div class="amt">Get Bonus Upto ₹500</div>
+          <div class="desc">Complete weekly tasks & win bonus</div>
+          <button class="btn-details" onclick="showToast('Reward details')">Details ›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PROFILE ===================== -->
+  <div class="page" id="page-profile">
+    <div class="profile-hero">
+      <button class="settings-btn" onclick="toggleProfileMenu()">⚙️</button>
+      <div class="big-avatar" id="pAvatar">A</div>
+      <div class="p-name"><span id="pFirst">USER</span><span class="dot">•</span><span id="pLast">2605</span></div>
+    </div>
+
+    <div class="profile-divider"></div>
+
+    <div class="profile-menu" id="profileMenu" style="display:none">
+      <div class="pm-item" onclick="showToast('Edit Profile')">Edit Profile</div>
+      <div class="pm-item" onclick="showToast('My Account')">My Account</div>
+      <div class="pm-item danger" onclick="logout()">Logout</div>
+      <div class="pm-item cancel" onclick="toggleProfileMenu()">Cancel</div>
+    </div>
+
+    <!-- Edit Profile -->
+    <div id="editProfileSection" style="display:none">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-input" id="editFirst" placeholder="First name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-input" id="editLast" placeholder="Last name">
+      </div>
+      <button class="btn-update" onclick="updateProfile()">Update Profile</button>
+    </div>
+
+    <!-- My Account -->
+    <div id="myAccountSection" style="display:none">
+      <div class="acc-section">
+        <div class="acc-head open" onclick="toggleAcc(this)">
+          <span><span class="ico">👤</span> Account</span>
+          <span class="arr">▼</span>
+        </div>
+        <div class="acc-body open">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-input" id="accEmail" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" id="accFirst">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" id="accLast">
+          </div>
+          <button class="btn-update" onclick="updateProfile()">Update Account</button>
+        </div>
+      </div>
+
+      <div class="acc-section">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span><span class="ico">🔒</span> Change Password</span>
+          <span class="arr">▼</span>
+        </div>
+        <div class="acc-body">
+          <div class="form-group">
+            <label class="form-label">Current Password</label>
+            <input type="password" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-input">
+          </div>
+          <button class="btn-update" onclick="showToast('Password updated')">Update Password</button>
+        </div>
+      </div>
+
+      <div class="acc-section">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <span><span class="ico">🔐</span> Privacy</span>
+          <span class="arr">▼</span>
+        </div>
+        <div class="acc-body">
+          <p style="font-size:.85rem;color:#64748b;line-height:1.7">
+            Your data is secure with us. We never share your personal information with third parties.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOP PERFORMERS ===================== -->
+  <div class="page" id="page-performers">
+    <div class="empty">
+      <div class="e-ico">🏆</div>
+      <h3>Top Performers</h3>
+      <p>Coming soon...</p>
+    </div>
+  </div>
+
+  <!-- ===================== GET LEADS ===================== -->
+  <div class="page" id="page-leads">
+    <div class="empty">
+      <div class="e-ico">🎯</div>
+      <h3>Get Leads</h3>
+      <p>Coming soon...</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ================ USER DATA ================
+var u = JSON.parse(localStorage.getItem('earn2605_currentUser') || 'null');
+if (!u) { window.location.href = 'login.html'; }
+
+if (u) {
+  var initial = (u.name || 'U').charAt(0).toUpperCase();
+  var nameParts = (u.name || 'User').split(' ');
+  var firstName = nameParts[0] || 'User';
+  var lastName = nameParts[1] || '2605';
+
+  // Dashboard
+  document.getElementById('dashAvatar').textContent = initial;
+  document.getElementById('dashName').textContent = u.name || 'User';
+  document.getElementById('topAvatar').textContent = initial;
+
+  // Wallet
+  document.getElementById('wName').textContent = u.name || 'User';
+  document.getElementById('wEmail').textContent = u.email || 'user@example.com';
+
+  // Reports
+  document.getElementById('rName').textContent = u.name || 'User';
+
+  // Tasks
+  document.getElementById('taskName').textContent = (u.name || 'User').toUpperCase();
+  document.getElementById('taskAvatar').textContent = initial;
+
+  // Profile
+  document.getElementById('pAvatar').textContent = initial;
+  document.getElementById('pFirst').textContent = firstName.toUpperCase();
+  document.getElementById('pLast').textContent = lastName.toUpperCase();
+  document.getElementById('editFirst').value = firstName;
+  document.getElementById('editLast').value = lastName;
+  document.getElementById('accFirst').value = firstName;
+  document.getElementById('accLast').value = lastName;
+  document.getElementById('accEmail').value = u.email || '';
+}
+
+// ================ DATE ================
+var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+var now = new Date();
+document.getElementById('wDay').textContent = days[now.getDay()];
+document.getElementById('wDate').textContent = now.getDate() + ' ' + months[now.getMonth()];
+
+// ================ PROJECTS DATA ================
+var projects = [
+  { num:1, name:'5paisa', icon:'💰', p1:'250', p2:'0', pro:true },
+  { num:2, name:'BajajBroking', icon:'📈', p1:'0', p2:'100', pro:false },
+  { num:3, name:'Choice Broking', icon:'🏦', p1:'250', p2:'0', pro:true },
+  { num:4, name:'Hdfc Sky', icon:'🏛️', p1:'270', p2:'90', pro:true },
+  { num:5, name:'Incred Stocko Fno', icon:'📊', p1:'700', p2:'0', pro:true },
+  { num:6, name:'Kotak Neo', icon:'⚡', p1:'0', p2:'170', pro:false },
+  { num:7, name:'Lemonn', icon:'🍋', p1:'800', p2:'0', pro:true },
+  { num:8, name:'Sharekhan', icon:'📉', p1:'0', p2:'70', pro:false }
+];
+
+var tbody = document.getElementById('projectsBody');
+projects.forEach(function(p) {
+  var row = '<tr>' +
+    '<td style="color:#8b5cf6;font-weight:800">' + p.num + '</td>' +
+    '<td><div class="app-cell"><div class="app-logo">' + p.icon + '</div><div><strong>' + p.name + '</strong></div></div></td>' +
+    '<td class="payout-cell">' +
+      '<span class="p1"><span class="amt">' + p.p1 + '</span><span class="txt">INR On Activation</span></span>' +
+      '<span class="p2"><span class="amt">' + p.p2 + '</span><span class="txt">INR On Opened</span></span>' +
+      (p.pro ? '<br><span class="pro-badge">👑 PRO</span>' : '') +
+    '</td>' +
+    '<td><span class="status-active">Active</span></td>' +
+    '<td><button class="btn-copy-small" onclick="showToast(\'Link copied!\')">📋 Copy</button></td>' +
+    '<td><button class="btn-view-small" onclick="showToast(\'Opening rules...\')">👁 View</button></td>' +
+    '</tr>';
+  tbody.innerHTML += row;
+});
+
+// ================ MENU ================
+function openMenu() {
+  document.getElementById('sideMenu').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeMenu() {
+  document.getElementById('sideMenu').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+// ================ SHOW PAGE ================
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  var el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+
+  document.querySelectorAll('.menu-list a').forEach(function(a) { a.classList.remove('active'); });
+  var activeLink = document.querySelector('.menu-list a[data-page="' + page + '"]');
+  if (activeLink) activeLink.classList.add('active');
+
+  document.getElementById('topTitle').textContent = page.toUpperCase();
+
+  // Reset profile menus
+  if (page === 'profile') {
+    document.getElementById('profileMenu').style.display = 'none';
+    document.getElementById('editProfileSection').style.display = 'none';
+    document.getElementById('myAccountSection').style.display = 'none';
+  }
+
+  closeMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================ PROFILE MENU ================
+function toggleProfileMenu() {
+  var m = document.getElementById('profileMenu');
+  var e = document.getElementById('editProfileSection');
+  var a = document.getElementById('myAccountSection');
+  m.style.display = m.style.display === 'none' ? 'block' : 'none';
+  e.style.display = 'none';
+  a.style.display = 'none';
+}
+
+// Override pm-item Edit and My Account clicks
+document.querySelectorAll('.pm-item').forEach(function(item) {
+  item.addEventListener('click', function() {
+    var txt = this.textContent.trim();
+    if (txt === 'Edit Profile') {
+      document.getElementById('profileMenu').style.display = 'none';
+      document.getElementById('editProfileSection').style.display = 'block';
+      document.getElementById('myAccountSection').style.display = 'none';
+    } else if (txt === 'My Account') {
+      document.getElementById('profileMenu').style.display = 'none';
+      document.getElementById('editProfileSection').style.display = 'none';
+      document.getElementById('myAccountSection').style.display = 'block';
+    }
+  });
+});
+
+// ================ ACCORDION ================
+function toggleAcc(head) {
+  head.classList.toggle('open');
+  var body = head.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ================ UPDATE PROFILE ================
+function updateProfile() {
+  var f = document.getElementById('editFirst').value.trim();
+  var l = document.getElementById('editLast').value.trim();
+  if (!f) { showToast('Enter first name'); return; }
+
+  if (u) {
+    u.name = f + (l ? ' ' + l : '');
+    localStorage.setItem('earn2605_currentUser', JSON.stringify(u));
+  }
+
+  document.getElementById('dashName').textContent = u.name;
+  document.getElementById('dashAvatar').textContent = f.charAt(0).toUpperCase();
+  document.getElementById('pFirst').textContent = f.toUpperCase();
+  document.getElementById('pLast').textContent = l.toUpperCase();
+  document.getElementById('pAvatar').textContent = f.charAt(0).toUpperCase();
+
+  showToast('✓ Profile updated!');
+}
+
+// ================ LOGOUT ================
+function logout() {
+  if (confirm('Logout karna chahte ho?')) {
+    localStorage.removeItem('earn2605_currentUser');
+    window.location.href = 'index.html';
+  }
+}
+
+// ================ TOAST ================
+var toastTimer;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2000);
+}
+</script>
+
+</body>
+</html>
