@@ -8,83 +8,56 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
     body {
         font-family: 'Poppins', sans-serif;
         color: #1e293b;
         line-height: 1.6;
-        background: #ffffff;
+        background: #fff;
         overflow-x: hidden;
     }
-
     a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
     /* ===== HEADER ===== */
     .header {
-        background: #ffffff;
+        background: #fff;
         box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        position: sticky; top: 0; z-index: 1000;
     }
-
     .header-inner {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: flex; justify-content: space-between; align-items: center;
         padding: 14px 0;
     }
-
     .logo {
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #0f172a;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        display: flex; align-items: center; gap: 10px;
+        font-size: 1.3rem; font-weight: 800; color: #0f172a;
     }
-
     .logo-mark {
-        width: 40px;
-        height: 40px;
+        width: 40px; height: 40px;
         background: linear-gradient(135deg, #2563eb, #7c3aed);
         border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-weight: 800;
-        font-size: 1.1rem;
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-weight: 800;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
-
-    .logo-text span { color: #2563eb; }
+    .logo span { color: #2563eb; }
 
     .nav-links {
-        display: flex;
-        gap: 30px;
-        list-style: none;
+        display: flex; gap: 30px; list-style: none;
     }
-
     .nav-links a {
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: #475569;
-        transition: color 0.2s;
+        font-size: 0.95rem; font-weight: 500;
+        color: #475569; transition: color 0.2s;
     }
-
     .nav-links a:hover { color: #2563eb; }
+
+    .header-buttons {
+        display: flex; gap: 10px; align-items: center;
+    }
 
     .btn {
         display: inline-block;
-        padding: 12px 28px;
+        padding: 12px 26px;
         border-radius: 8px;
         font-weight: 600;
         font-size: 0.95rem;
@@ -92,34 +65,32 @@
         cursor: pointer;
         border: none;
         font-family: inherit;
+        text-align: center;
     }
-
     .btn-primary {
         background: linear-gradient(135deg, #2563eb, #7c3aed);
-        color: #ffffff;
+        color: #fff;
         box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
     }
-
     .btn-primary:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
     }
-
     .btn-outline {
         background: transparent;
         color: #2563eb;
         border: 2px solid #2563eb;
     }
-
     .btn-outline:hover {
-        background: #2563eb;
-        color: #ffffff;
+        background: #2563eb; color: #fff;
     }
-
-    .btn-lg {
-        padding: 16px 40px;
-        font-size: 1rem;
+    .btn-ghost {
+        background: transparent;
+        color: #475569;
+        padding: 12px 18px;
     }
+    .btn-ghost:hover { color: #2563eb; }
+    .btn-lg { padding: 16px 40px; font-size: 1rem; }
 
     /* ===== HERO ===== */
     .hero {
@@ -129,178 +100,97 @@
         position: relative;
         overflow: hidden;
     }
-
     .hero::before {
         content: "";
-        position: absolute;
-        top: -100px;
-        right: -100px;
-        width: 400px;
-        height: 400px;
+        position: absolute; top: -100px; right: -100px;
+        width: 400px; height: 400px;
         background: radial-gradient(circle, rgba(124, 58, 237, 0.1), transparent 70%);
         border-radius: 50%;
     }
-
     .hero-badge {
         display: inline-block;
-        background: #dcfce7;
-        color: #166534;
-        padding: 8px 20px;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 600;
+        background: #dcfce7; color: #166534;
+        padding: 8px 20px; border-radius: 50px;
+        font-size: 0.85rem; font-weight: 600;
         margin-bottom: 24px;
-        animation: pulse 2s infinite;
     }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.03); }
-    }
-
     .hero h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        color: #0f172a;
-        margin-bottom: 20px;
-        line-height: 1.15;
+        font-size: 3rem; font-weight: 800; color: #0f172a;
+        margin-bottom: 20px; line-height: 1.15;
         letter-spacing: -0.02em;
     }
-
     .hero h1 span {
         background: linear-gradient(135deg, #2563eb, #7c3aed);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
-
     .hero p {
-        font-size: 1.1rem;
-        color: #475569;
-        max-width: 680px;
-        margin: 0 auto 36px;
+        font-size: 1.1rem; color: #475569;
+        max-width: 680px; margin: 0 auto 36px;
     }
-
     .hero-buttons {
-        display: flex;
-        gap: 14px;
-        justify-content: center;
-        flex-wrap: wrap;
+        display: flex; gap: 14px;
+        justify-content: center; flex-wrap: wrap;
     }
 
-    /* ===== TRUSTED PLATFORM ===== */
-    .trusted {
-        padding: 60px 0;
-        background: #ffffff;
-        text-align: center;
-    }
-
+    /* ===== TRUSTED ===== */
+    .trusted { padding: 60px 0; background: #fff; text-align: center; }
     .trusted-box {
         background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
         border: 1px solid #bbf7d0;
         border-radius: 16px;
-        padding: 40px 30px;
-        max-width: 800px;
-        margin: 0 auto;
+        padding: 40px 30px; max-width: 800px; margin: 0 auto;
     }
-
     .trusted-box h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #166534;
-        margin-bottom: 12px;
+        font-size: 1.5rem; font-weight: 700;
+        color: #166534; margin-bottom: 12px;
     }
-
     .trusted-box p {
-        color: #166534;
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-        opacity: 0.85;
+        color: #166534; font-size: 0.95rem;
+        margin-bottom: 20px; opacity: 0.85;
     }
-
     .trusted-box a {
         display: inline-block;
-        background: #166534;
-        color: #ffffff;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.2s;
-    }
-
-    .trusted-box a:hover {
-        background: #14532d;
-        transform: translateY(-1px);
+        background: #166534; color: #fff;
+        padding: 10px 24px; border-radius: 8px;
+        font-weight: 600; font-size: 0.9rem;
     }
 
     /* ===== DIFFERENTIATORS ===== */
-    .differentiators {
-        padding: 60px 0;
-        text-align: center;
-        background: #f8fafc;
-    }
-
+    .differentiators { padding: 60px 0; text-align: center; background: #f8fafc; }
     .differentiators h2 {
-        font-size: 1.6rem;
-        margin-bottom: 24px;
-        color: #0f172a;
-        font-weight: 700;
+        font-size: 1.6rem; margin-bottom: 24px;
+        color: #0f172a; font-weight: 700;
     }
-
     .diff-tags {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
+        display: flex; flex-wrap: wrap;
+        justify-content: center; gap: 12px;
     }
-
     .diff-tag {
-        background: #fee2e2;
-        color: #991b1b;
-        padding: 10px 24px;
-        border-radius: 50px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        background: #fee2e2; color: #991b1b;
+        padding: 10px 24px; border-radius: 50px;
+        font-size: 0.9rem; font-weight: 600;
     }
-
-    .diff-tag.green {
-        background: #dcfce7;
-        color: #166534;
-    }
+    .diff-tag.green { background: #dcfce7; color: #166534; }
 
     /* ===== FEATURES ===== */
-    .features {
-        padding: 80px 0;
-        background: #ffffff;
-    }
-
+    .features { padding: 80px 0; background: #fff; }
     .section-title {
-        text-align: center;
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 12px;
-        color: #0f172a;
+        text-align: center; font-size: 2.2rem; font-weight: 800;
+        margin-bottom: 12px; color: #0f172a;
         letter-spacing: -0.02em;
     }
-
     .section-sub {
-        text-align: center;
-        color: #64748b;
-        max-width: 620px;
-        margin: 0 auto 56px;
+        text-align: center; color: #64748b;
+        max-width: 620px; margin: 0 auto 56px;
         font-size: 1.05rem;
     }
-
     .features-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 24px;
     }
-
     .feature-card {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -308,191 +198,107 @@
         padding: 36px 28px;
         transition: all 0.3s;
     }
-
     .feature-card:hover {
         box-shadow: 0 12px 32px rgba(37, 99, 235, 0.1);
         transform: translateY(-4px);
         border-color: #c7d2fe;
-        background: #ffffff;
+        background: #fff;
     }
-
     .feature-icon {
-        font-size: 1.8rem;
-        margin-bottom: 18px;
-        width: 56px;
-        height: 56px;
+        font-size: 1.8rem; margin-bottom: 18px;
+        width: 56px; height: 56px;
         background: linear-gradient(135deg, #eff6ff, #ede9fe);
         border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; align-items: center; justify-content: center;
     }
-
     .feature-card h3 {
-        font-size: 1.15rem;
-        margin-bottom: 10px;
-        color: #0f172a;
-        font-weight: 700;
+        font-size: 1.15rem; margin-bottom: 10px;
+        color: #0f172a; font-weight: 700;
     }
-
-    .feature-card p {
-        font-size: 0.95rem;
-        color: #64748b;
-    }
+    .feature-card p { font-size: 0.95rem; color: #64748b; }
 
     /* ===== STEPS ===== */
-    .steps {
-        padding: 80px 0;
-        background: #f8fafc;
-    }
-
+    .steps { padding: 80px 0; background: #f8fafc; }
     .steps-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
-        margin-top: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px; margin-top: 40px;
     }
-
     .step-card {
-        background: #ffffff;
-        border-radius: 16px;
+        background: #fff; border-radius: 16px;
         padding: 36px 28px;
-        position: relative;
         border: 1px solid #e2e8f0;
         transition: all 0.3s;
     }
-
     .step-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-        border-color: #c7d2fe;
     }
-
     .step-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-flex; align-items: center; justify-content: center;
         background: linear-gradient(135deg, #2563eb, #7c3aed);
-        color: #ffffff;
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        font-weight: 800;
+        color: #fff; width: 48px; height: 48px;
+        border-radius: 12px; font-weight: 800;
         margin-bottom: 18px;
-        font-size: 1rem;
     }
-
     .step-card h3 {
-        font-size: 1.2rem;
-        margin-bottom: 14px;
-        font-weight: 700;
-        color: #0f172a;
+        font-size: 1.2rem; margin-bottom: 14px;
+        font-weight: 700; color: #0f172a;
     }
-
     .step-card ul { list-style: none; padding: 0; }
-
     .step-card ul li {
-        font-size: 0.92rem;
-        color: #475569;
-        padding: 6px 0 6px 26px;
-        position: relative;
+        font-size: 0.92rem; color: #475569;
+        padding: 6px 0 6px 26px; position: relative;
     }
-
     .step-card ul li::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        color: #22c55e;
-        font-weight: 800;
-        font-size: 1rem;
+        content: "✓"; position: absolute; left: 0;
+        color: #22c55e; font-weight: 800;
     }
 
     /* ===== CTA ===== */
     .cta {
-        padding: 90px 0;
-        text-align: center;
+        padding: 90px 0; text-align: center;
         background: linear-gradient(135deg, #0f172a, #1e293b);
-        color: #ffffff;
-        position: relative;
-        overflow: hidden;
+        color: #fff; position: relative; overflow: hidden;
     }
-
-    .cta::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(37, 99, 235, 0.2), transparent 70%);
-        border-radius: 50%;
-    }
-
-    .cta > .container { position: relative; z-index: 1; }
-
     .cta h2 {
-        font-size: 2.4rem;
-        margin-bottom: 16px;
+        font-size: 2.4rem; margin-bottom: 16px;
         font-weight: 800;
-        letter-spacing: -0.02em;
     }
-
     .cta p {
-        color: #94a3b8;
-        max-width: 580px;
+        color: #94a3b8; max-width: 580px;
         margin: 0 auto 36px;
-        font-size: 1.05rem;
     }
 
     /* ===== FOOTER ===== */
     .footer {
-        background: #0f172a;
-        color: #64748b;
+        background: #0f172a; color: #64748b;
         padding: 40px 0 24px;
         font-size: 0.9rem;
         border-top: 1px solid #1e293b;
     }
-
     .footer-inner {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 20px;
+        display: flex; justify-content: space-between;
+        align-items: center; flex-wrap: wrap; gap: 20px;
     }
-
-    .footer a {
-        color: #94a3b8;
-        transition: color 0.2s;
-    }
-
-    .footer a:hover { color: #ffffff; }
-
-    .footer-links {
-        display: flex;
-        gap: 24px;
-    }
+    .footer a { color: #94a3b8; transition: color 0.2s; }
+    .footer a:hover { color: #fff; }
+    .footer-links { display: flex; gap: 24px; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
         .hero h1 { font-size: 2rem; }
-        .hero p { font-size: 1rem; }
         .section-title { font-size: 1.6rem; }
         .cta h2 { font-size: 1.6rem; }
         .nav-links { display: none; }
-        .header-inner .btn { padding: 10px 20px; font-size: 0.85rem; }
-        .hero { padding: 60px 0 50px; }
+        .header-buttons .btn { padding: 10px 16px; font-size: 0.85rem; }
         .footer-inner { justify-content: center; text-align: center; }
     }
-
     @media (max-width: 480px) {
         .hero h1 { font-size: 1.7rem; }
         .btn-lg { padding: 14px 28px; font-size: 0.9rem; }
-        .hero-buttons { flex-direction: column; align-items: stretch; }
-        .hero-buttons .btn { width: 100%; text-align: center; }
-        .logo { font-size: 1.15rem; }
-        .logo-mark { width: 34px; height: 34px; font-size: 0.95rem; }
+        .hero-buttons { flex-direction: column; }
+        .hero-buttons .btn { width: 100%; }
     }
 </style>
 </head>
@@ -501,10 +307,10 @@
 <!-- ===== HEADER ===== -->
 <header class="header">
     <div class="container header-inner">
-        <div class="logo">
+        <a href="index.html" class="logo">
             <div class="logo-mark">E</div>
-            <div class="logo-text">Earn<span>2605</span></div>
-        </div>
+            Earn<span>2605</span>
+        </a>
         <nav>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
@@ -512,7 +318,10 @@
                 <li><a href="#cta">Join Now</a></li>
             </ul>
         </nav>
-        <a href="#cta" class="btn btn-primary">Get Started</a>
+        <div class="header-buttons">
+            <a href="login.html" class="btn btn-ghost">Login</a>
+            <a href="register.html" class="btn btn-primary">Register</a>
+        </div>
     </div>
 </header>
 
@@ -523,18 +332,18 @@
         <h1>Build Your <span>Financial Freedom</span><br>With Digital Skills</h1>
         <p>Join India's fastest growing community for creating sustainable online income with zero investment.</p>
         <div class="hero-buttons">
-            <a href="#cta" class="btn btn-primary btn-lg">Start Earning Today</a>
+            <a href="register.html" class="btn btn-primary btn-lg">Start Earning Today</a>
             <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
         </div>
     </div>
 </section>
 
-<!-- ===== TRUSTED PLATFORM ===== -->
+<!-- ===== TRUSTED ===== -->
 <section class="trusted">
     <div class="container">
         <div class="trusted-box">
             <h2>✅ Officially Verified & Trusted Platform</h2>
-            <p>Earn2605 is a fully registered and government recognized platform operating with complete transparency and compliance with all Indian legal regulations.</p>
+            <p>Earn2605 is a fully registered platform operating with complete transparency and compliance with Indian legal regulations.</p>
             <a href="#">View Certificate</a>
         </div>
     </div>
@@ -559,7 +368,6 @@
     <div class="container">
         <h2 class="section-title">Why Choose Earn2605?</h2>
         <p class="section-sub">We provide everything you need to start earning online with complete support and training.</p>
-
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🎓</div>
@@ -600,7 +408,6 @@
     <div class="container">
         <h2 class="section-title">Your Success Journey</h2>
         <p class="section-sub">Our proven 3-step system takes you from beginner to financial freedom.</p>
-
         <div class="steps-grid">
             <div class="step-card">
                 <div class="step-number">01</div>
@@ -637,15 +444,15 @@
 <section class="cta" id="cta">
     <div class="container">
         <h2>Ready to Transform Your Life?</h2>
-        <p>Join thousands of members who are building sustainable online incomes with our proven system.</p>
-        <a href="#" class="btn btn-primary btn-lg">Start Earning Today →</a>
+        <p>Join thousands of members building sustainable online incomes.</p>
+        <a href="register.html" class="btn btn-primary btn-lg">Start Earning Today →</a>
     </div>
 </section>
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
     <div class="container footer-inner">
-        <div>&copy; 2025 Earn2605. All rights reserved.</div>
+        <div>© 2025 Earn2605. All rights reserved.</div>
         <div class="footer-links">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
