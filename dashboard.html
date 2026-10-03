@@ -530,7 +530,80 @@ td{padding:14px 10px;border-top:1px solid #f1f5f9;white-space:nowrap;font-size:.
 <div class="toast" id="toast"></div>
 
 <script>
-var SCRIPT_URL = '';
+var SCRIPT_URL = function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    // Payment update
+    if (data.action === 'updatePayment') {
+      var rows = sheet.getDataRange().getValues();
+      for (var i = 1; i < rows.length; i++) {
+        if (rows[i][1] === data.email) {
+          var row = i + 1;
+          sheet.getRange(row, 6).setValue(data.today || 0);
+          sheet.getRange(row, 7).setValue(data.week || 0);
+          sheet.getRange(row, 8).setValue(data.total || 0);
+          sheet.getRange(row, 9).setValue(data.withdrawable || 0);
+          sheet.getRange(row, 10).setValue(data.hold || 0);
+          return ContentService.createTextOutput(JSON.stringify({status:'updated'})).setMimeType(ContentService.MimeType.JSON);
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({status:'notfound'})).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    // Register
+    var emails = sheet.getRange('B:B').getValues().flat();
+    if (emails.indexOf(data.email) > -1) {
+      return ContentService.createTextOutput(JSON.stringify({status:'duplicate'})).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    sheet.appendRow([
+      data.name,
+      data.email,
+      data.phone,
+      data.password,
+      new Date(),
+      0, 0, 0, 0, 0
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({status:'success'})).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({status:'error', message: err.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = sheet.getDataRange().getValues();
+    var users = [];
+    
+    for (var i = 1; i < data.length; i++) {
+      users.push({
+        name: data[i][0],
+        email: data[i][1],
+        phone: data[i][2],
+        password: data[i][3],
+        date: data[i][4],
+        today: data[i][5] || 0,
+        week: data[i][6] || 0,
+        total: data[i][7] || 0,
+        withdrawable: data[i][8] || 0,
+        hold: data[i][9] || 0
+      });
+    }
+    
+    if (e.parameter.email) {
+      var user = users.find(function(u){ return u.email === e.parameter.email; });
+      return ContentService.createTextOutput(JSON.stringify({status:'success', user: user})).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({status:'success', users: users})).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({status:'error', message: err.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
 
 var u = JSON.parse(localStorage.getItem('earn2605_currentUser') || 'null');
 if (!u) { window.location.href = 'login.html'; }
@@ -1017,7 +1090,49 @@ function logout() {
     localStorage.removeItem('earn2605_currentUser');
     window.location.href = 'index.html';
   }
+}// ============ GOOGLE SHEET SE PAYMENT FETCH ============
+function loadPayment() {
+  if (!SCRIPT_URL || !u || !u.email) return;
+  
+  fetch(SCRIPT_URL + '?email=' + encodeURIComponent(u.email) + '&t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (res.status === 'success' && res.user) {
+        var d = res.user;
+        
+        var todayEl = document.getElementById('todayEarn');
+        var weekEl = document.getElementById('weekEarn');
+        var allEl = document.getElementById('allEarn');
+        if (todayEl) todayEl.textContent = '₹ ' + (d.today || 0);
+        if (weekEl) weekEl.textContent = '₹ ' + (d.week || 0);
+        if (allEl) allEl.textContent = '₹ ' + (d.total || 0);
+        
+        var wTotal = document.getElementById('wTotal');
+        var wWith = document.getElementById('wWithdraw');
+        var wHold = document.getElementById('wHold');
+        if (wTotal) wTotal.textContent = '₹ ' + (d.total || 0);
+        if (wWith) wWith.textContent = '₹ ' + (d.withdrawable || 0);
+        if (wHold) wHold.textContent = '₹ ' + (d.hold || 0);
+        
+        var taskEarn = document.getElementById('taskEarn');
+        if (taskEarn) taskEarn.textContent = '₹' + (d.total || 0);
+        
+        var e = {
+          today: d.today || 0,
+          week: d.week || 0,
+          total: d.total || 0,
+          withdrawable: d.withdrawable || 0,
+          hold: d.hold || 0,
+          referrals: 0
+        };
+        try { saveUserData('earnings', e); } catch(err) {}
+      }
+    })
+    .catch(function() {});
 }
+
+loadPayment();
+setInterval(loadPayment, 30000);
 
 // TOAST
 var toastTimer;
